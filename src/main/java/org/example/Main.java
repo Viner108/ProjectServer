@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -14,11 +15,15 @@ public class Main {
         ServerSocket serverSocket = new ServerSocket(8081);
         Socket input = serverSocket.accept();
 
-        Scanner in = new Scanner(input.getInputStream());
-        while (in.hasNext()) {
-            System.out.println(in.nextLine());
+//        Scanner in = new Scanner(input.getInputStream());
+//        while (in.hasNext()) {
+//            System.out.println(in.nextLine());
+//        }
+        InputStream in = input.getInputStream();
+        ObjectInputStream ois = new ObjectInputStream(in);
+        for (int i = 0; i < 1000000; i++) {
+            DTO dtoIn = (DTO) ois.readObject();
         }
-
         in.close();
         input.close();
         serverSocket.close();
