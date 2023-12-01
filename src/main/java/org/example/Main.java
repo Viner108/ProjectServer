@@ -5,36 +5,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Main {
-    //    private static BufferedReader in; // поток чтения из сокета
-//    private static BufferedWriter out; // поток записи в сокет
+    private static int PORT = 8081;
 
-    private static ServerSocket server;
-    private static ObjectInputStream in;
-    private static ObjectOutputStream out;
+    public static void main(String[] args) throws Exception {
+        ServerSocket serverSocket = new ServerSocket(8081);
+        Socket input = serverSocket.accept();
 
-    public static void main(String[] args) {
-        try {
-            try {
-                server = new ServerSocket(4004);
-                System.out.println("Сервер запущен!");
-                Socket socket1 = server.accept();
-                try {
-                    System.out.println("готовим вх и вых");
-                    in = new ObjectInputStream(socket1.getInputStream());
-                    out = new ObjectOutputStream(socket1.getOutputStream());
-                } finally {
-                    socket1.close();
-                    in.close();
-                    out.close();
-                }
-            } finally {
-                System.out.println("Сервер закрыт!");
-                server.close();
-            }
-        } catch (IOException e) {
-            System.err.println(e);
+        Scanner in = new Scanner(input.getInputStream());
+        while (in.hasNext()) {
+            System.out.println(in.nextLine());
         }
+
+        in.close();
+        input.close();
+        serverSocket.close();
+
     }
+
+
 }
