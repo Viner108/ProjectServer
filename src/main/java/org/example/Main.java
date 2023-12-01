@@ -21,6 +21,7 @@ public class Main {
 //        }
         InputStream in = input.getInputStream();
         ObjectInputStream ois = new ObjectInputStream(in);
+        System.out.println("Start");
         for (int i = 0; i < 1000000; i++) {
             DTO dtoIn = (DTO) ois.readObject();
         }
